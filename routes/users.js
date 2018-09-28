@@ -12,7 +12,6 @@ var users = require('../controllers/users');
 router.get('/', users.home );
 /* Login page */
 router.get('/login', users.login);
-
 /* Get user list */
 router.get('/users-list', users.usersList);
 /* Check user credential */
@@ -22,15 +21,7 @@ router.get('/logout', users.logout);
 //User registration
 router.post('/user-registration/', users.userRegistration);
 /* Dashboard start */
-
-router.get('/dashboard', function(req, res, next){
-  if(req.session.userLogin == true){
-    res.render('user/dashboard');
-  }
-  else {
-    res.redirect('/');
-  }
-});
+router.get('/dashboard', users.dashboard);
 
 /* facebook routing */
 

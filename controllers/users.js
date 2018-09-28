@@ -75,3 +75,13 @@ module.exports.logout = function(req, res, next){
       res.redirect('/users');
   });
 };
+
+/* method: dashboard, @method: users dashboard */
+module.exports.dashboard = function(req, res, next){
+  if(req.session.userLogin == true){
+    res.render('user/dashboard');
+  }
+  else {
+    res.redirect('/');
+  }
+};
