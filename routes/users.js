@@ -6,7 +6,7 @@ var passport = require('passport');
 var expressValidator = require('express-validator'); //Declare Express-Validator
 var db = require('../model/db');
 var user =  require('../model/admin/user');
-var users = require('../controllers/users');
+var users = require('../controllers/admin/users');
 
 /* GET users dashboard */
 router.get('/', users.home );

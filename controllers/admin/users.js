@@ -1,6 +1,6 @@
 var express = require('express');
 var expressValidator = require('express-validator'); //Declare Express-Validator
-var user =  require('../model/admin/user');
+var user =  require('../../model/admin/user');
 
 
 /* method: home
@@ -8,9 +8,9 @@ var user =  require('../model/admin/user');
  */
 module.exports.home = function(req, res, next) {
   if(req.session.userLogin == true){
-    res.render('user/dashboard', { title: 'Super Admin Dashboard' });
+    res.render('admin/dashboard', { title: 'Super Admin Dashboard' });
   }else {
-    res.render('user/index', { title: 'Login', mobileErrorMessage: req.flash('mobileErrorMessage') });
+    res.render('admin/index', { title: 'Login', mobileErrorMessage: req.flash('mobileErrorMessage') });
   }
 };
 
@@ -23,9 +23,9 @@ module.exports.login = function(req, res, next){
 /* method: usersList, @desc: Display the list of users */
 module.exports.usersList = function(req, res, next){
   if(req.session.userLogin == true){
-    res.render('user/users-list', { title: 'Users List'});
+    res.render('admin/users-list', { title: 'Users List'});
   }else {
-    res.render('user/index', { title: 'Login' });
+    res.render('admin/index', { title: 'Login' });
   }
 };
 
@@ -60,7 +60,7 @@ module.exports.userLogin = function(req, res, next){
       req.session.userLogin = true ;
       req.session.userName = rows[0].fullname
       console.log(rows);
-      res.render('user/dashboard', { title: 'Dashboard' });
+      res.render('admin/dashboard', { title: 'Dashboard' });
     }
     else{
       res.redirect('/users');
@@ -79,7 +79,7 @@ module.exports.logout = function(req, res, next){
 /* method: dashboard, @method: users dashboard */
 module.exports.dashboard = function(req, res, next){
   if(req.session.userLogin == true){
-    res.render('user/dashboard');
+    res.render('admin/dashboard');
   }
   else {
     res.redirect('/');
