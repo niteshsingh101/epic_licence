@@ -14,15 +14,16 @@ router.get('/', users.home );
 router.get('/login', users.login);
 /* Get user list */
 router.get('/users-list', users.usersList);
-/* Check user credential */
-router.post('/', users.userLogin);
 // logut
 router.get('/logout', users.logout);
-//User registration
-router.post('/user-registration/', users.userRegistration);
 /* Dashboard start */
 router.get('/dashboard', users.dashboard);
 
+/* Post method routing */
+//User registration
+router.post('/user-registration/', users.userRegistration);
+/* Check user credential */
+router.post('/', users.userLogin);
 /* facebook routing */
 
 router.get('/auth/facebook', passport.authenticate('facebook'));
@@ -30,6 +31,5 @@ router.get('/auth/facebook', passport.authenticate('facebook'));
 router.get('/auth/facebook/callback',
  passport.authenticate('facebook', { successRedirect: '/users', failureRedirect: '/login' }));
 
-/* Dashboard End  */
 
 module.exports = router;

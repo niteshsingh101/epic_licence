@@ -1,6 +1,8 @@
 var mysql = require('mysql');
 var db = require('../db');
 var Promise = require('promise');
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr('myTotalySecretKey');
 /* Login Model */
 function userAuthentication(username, password)
 {
@@ -15,8 +17,23 @@ function userAuthentication(username, password)
         });
     });
 }
+/* User Registration */
+function userRegistration(email, mobile, password){
+  var encryptedString = cryptr.encrypt(password);
+    return new Promise(function(resolve, reject){
+    db.query("insert into system_users (email, password, verification_status, status) VALUES ('"+email+"','"+ encryptedString+"', '0', '0')", function(err, result){
+      if (err) {
+        return reject(err);
+      }
+      resolve(result);
+    });
+  });
+//const decryptedString = cryptr.decrypt(encryptedString);
+}
 
 /////////////////////////////////////////////////////////////
 module.exports = {
-  userAuthentication : userAuthentication
+  userAuthentication : userAuthentication,
+  userRegistration : userRegistration
+
 }
