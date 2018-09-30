@@ -31,7 +31,14 @@ module.exports.usersList = function(req, res, next){
 
 /* method: userRegistration, @desc: user registration method */
 module.exports.userRegistration = function(req, res, next){
-  // if(req.body.mobile == ""){
+  user.userRegistration(req.body.email, req.body.mobile, req.body.cnf_password).then(function(result){
+    if(result){
+      req.session.userLogin = true ;
+      console.log(result);
+      res.redirect('/users');
+    }
+  }).catch((err) => setImmediate(() => { throw err; }));;
+  //if(req.body.mobile == ""){
   //   req.flash('mobileErrorMessage', 'Mobile number can not be left blank !');
   //   res.redirect('/users');
   // }
@@ -47,7 +54,7 @@ module.exports.userRegistration = function(req, res, next){
   //       errors: errors
   //   });
   //   }
-  res.send("calling.....");
+  //res.send("calling.....");
 };
 
 /* method: userLogin, @desc: pass the username and password as a parameter into a method to check user is valid or not */
