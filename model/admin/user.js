@@ -8,12 +8,10 @@ function userAuthentication(username, password)
 {
     return new Promise(function(resolve, reject) {
         db.query("Select * from system_users where email = '"+username+"' AND password = '"+password+"'", function (err, rows, fields) {
-            // Call reject on error states,
-            // call resolve with results
             if (err) {
-                return reject(err);
+                return reject(err); // Call reject on error states
             }
-            resolve(rows);
+            resolve(rows); // call resolve with results
         });
     });
 }
@@ -30,10 +28,23 @@ function userRegistration(email, mobile, password){
   });
 //const decryptedString = cryptr.decrypt(encryptedString);
 }
+/* Username validations Model */
+function isUsernameTaken(username)
+{
+    return new Promise(function(resolve, reject) {
+        db.query("Select * from system_users where email = '"+username+"'", function (err, rows, fields) {
+            if (err) {
+                return reject(err); // Call reject on error states
+            }
+            resolve(rows); // call resolve with results
+        });
+    });
+}
 
 /////////////////////////////////////////////////////////////
 module.exports = {
   userAuthentication : userAuthentication,
-  userRegistration : userRegistration
+  userRegistration : userRegistration,
+  isUsernameTaken : isUsernameTaken
 
 }

@@ -10,7 +10,8 @@ module.exports.home = function(req, res, next) {
   if(req.session.userLogin == true){
     res.render('admin/dashboard', { title: 'Super Admin Dashboard' });
   }else {
-    res.render('admin/index', { title: 'Login', mobileErrorMessage: req.flash('mobileErrorMessage') });
+    res.render('admin/index', { title: 'Login', mobileErrorMessage: req.flash('mobileErrorMessage'), emailErrorMessage: req.flash('emailErrorMessage'),
+    passwordErrorMessage: req.flash('passwordErrorMessage'), confirmPasswordErrorMessage: req.flash('confirmPasswordErrorMessage'), userEmailErrorMessage: req.flash('userEmailErrorMessage') });
   }
 };
 
@@ -31,30 +32,40 @@ module.exports.usersList = function(req, res, next){
 
 /* method: userRegistration, @desc: user registration method */
 module.exports.userRegistration = function(req, res, next){
-  user.userRegistration(req.body.email, req.body.mobile, req.body.cnf_password).then(function(result){
-    if(result){
-      req.session.userLogin = true ;
-      console.log(result);
-      res.redirect('/users');
-    }
-  }).catch((err) => setImmediate(() => { throw err; }));;
-  //if(req.body.mobile == ""){
-  //   req.flash('mobileErrorMessage', 'Mobile number can not be left blank !');
-  //   res.redirect('/users');
-  // }
-  //req.assert('mobile', 'Mobile is required').notEmpty();
-  // var errors = req.validationErrors();
-  // if( !errors){   //No errors were found.  Passed Validation!
-  //   res.redirect('/users');
-  // }
-  // else {   //Display errors to user
-  //   res.render('users/index', {
-  //       title: 'Login',
-  //       message: '',
-  //       errors: errors
-  //   });
-  //   }
-  //res.send("calling.....");
+  if(req.body.mobile == ""){
+    req.flash('mobileErrorMessage', 'Mobile number can not be left blank !');
+    res.redirect('/users');
+  }
+  else if (req.body.email == "") {
+    req.flash('emailErrorMessage', 'Email can not be left blank !');
+    res.redirect('/users');
+  }
+  else if (req.body.password == "") {
+    req.flash('passwordErrorMessage', 'Password can not be left blank !');
+    res.redirect('/users');
+  }
+  else if (req.body.cnf_password != req.body.password) {
+    req.flash('confirmPasswordErrorMessage', 'Password is not matching with confirm password !');
+    res.redirect('/users');
+  }
+  else {
+    user.isUsernameTaken(req.body.email).then(function(rows){
+      if(rows.length > 0){
+        req.flash('userEmailErrorMessage', 'Duplicate Email id !');
+        res.redirect('/users');
+      }
+      else {
+        user.userRegistration(req.body.email, req.body.mobile, req.body.cnf_password).then(function(result){
+          if(result){
+            req.session.userLogin = true ;
+            console.log(result);
+            res.redirect('/users');
+          }
+        }).catch((err) => setImmediate(() => { throw err; }));
+      }
+    }).catch((err) => setImmediate(() => { throw err; }));
+
+  }
 };
 
 /* method: userLogin, @desc: pass the username and password as a parameter into a method to check user is valid or not */
