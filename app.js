@@ -43,6 +43,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(require('cookie-parser')());
 app.use(require('body-parser').urlencoded({ extended: true }));
 app.use(require('express-session')({
+  cookie: { maxAge: 60000 },
   secret: 'keyboard cat',
   resave: true,
   saveUninitialized: true
