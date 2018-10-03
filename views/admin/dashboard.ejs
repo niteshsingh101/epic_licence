@@ -1,18 +1,18 @@
-<% include header %>
+<% include partial/header %>
 
 	<body class="no-skin">
-		<% include nav %>
+		<% include partial/nav %>
 
 		<div class="main-container ace-save-state" id="main-container">
 			<script type="text/javascript">
 				try{ace.settings.loadState('main-container')}catch(e){}
 			</script>
 
-			<% include left %>
+			<% include partial/left %>
 
 			<div class="main-content">
 				<div class="main-content-inner">
-					<% include breadcrumb %>
+					<% include partial/breadcrumb %>
 					<div class="page-content">
 						<div class="ace-settings-container" id="ace-settings-container">
 							<div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
@@ -223,4 +223,4 @@
 			</div><!-- /.main-content -->
 
 
-<% include footer %>
+<% include partial/footer %>

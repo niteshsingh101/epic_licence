@@ -10,8 +10,10 @@ module.exports.home = function(req, res, next) {
   if(req.session.userLogin == true){
     res.render('admin/dashboard', { title: 'Super Admin Dashboard' });
   }else {
-    res.render('admin/index', { title: 'Login', mobileErrorMessage: req.flash('mobileErrorMessage'), emailErrorMessage: req.flash('emailErrorMessage'),
-    passwordErrorMessage: req.flash('passwordErrorMessage'), confirmPasswordErrorMessage: req.flash('confirmPasswordErrorMessage'), userEmailErrorMessage: req.flash('userEmailErrorMessage') });
+    user.userRole().then(function(roles){
+      res.render('admin/index', { title: 'Login',userRole: roles,  mobileErrorMessage: req.flash('mobileErrorMessage'), emailErrorMessage: req.flash('emailErrorMessage'),
+      passwordErrorMessage: req.flash('passwordErrorMessage'), confirmPasswordErrorMessage: req.flash('confirmPasswordErrorMessage'), userEmailErrorMessage: req.flash('userEmailErrorMessage') });
+    }).catch((err) => setImmediate(() => { throw err; }));
   }
 };
 

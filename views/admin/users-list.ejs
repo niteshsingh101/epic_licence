@@ -1,18 +1,18 @@
-<% include header %>
+<% include partial/header %>
 
 	<body class="no-skin">
-		<% include nav %>
+		<% include partial/nav %>
 
 		<div class="main-container ace-save-state" id="main-container">
 			<script type="text/javascript">
 				try{ace.settings.loadState('main-container')}catch(e){}
 			</script>
 
-			<% include left %>
+			<% include partial/left %>
 
 			<div class="main-content">
 				<div class="main-content-inner">
-					<% include breadcrumb %>
+					<% include partial/breadcrumb %>
 					<div class="page-content">
 						<div class="ace-settings-container" id="ace-settings-container">
 							<div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
@@ -186,7 +186,7 @@
 															</div>
 														</td>
 													</tr>
-													
+
 												</tbody>
 											</table>
 											<!-- <div class="row"><div class="col-xs-6"><div class="dataTables_info" id="dynamic-table_info" role="status" aria-live="polite">Showing 1 to 10 of 23 entries</div></div><div class="col-xs-6"><div class="dataTables_paginate paging_simple_numbers" id="dynamic-table_paginate"><ul class="pagination"><li class="paginate_button previous disabled" aria-controls="dynamic-table" tabindex="0" id="dynamic-table_previous"><a href="#">Previous</a></li><li class="paginate_button active" aria-controls="dynamic-table" tabindex="0"><a href="#">1</a></li><li class="paginate_button " aria-controls="dynamic-table" tabindex="0"><a href="#">2</a></li><li class="paginate_button " aria-controls="dynamic-table" tabindex="0"><a href="#">3</a></li><li class="paginate_button next" aria-controls="dynamic-table" tabindex="0" id="dynamic-table_next"><a href="#">Next</a></li></ul></div></div></div></div> -->
@@ -198,4 +198,4 @@
 			</div><!-- /.main-content -->
 
 
-<% include footer %>
+<% include partial/footer %>

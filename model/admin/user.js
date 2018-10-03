@@ -41,10 +41,23 @@ function isUsernameTaken(username)
     });
 }
 
+/* Fetch userType from user_role table */
+function userRole(){
+  return new Promise(function(resolve, reject){
+    db.query("Select * from user_role where id !=1", function(err, rows, fields){
+      if(err){
+        return reject(err);
+      }
+      resolve(rows);
+
+    });
+  });
+};
 /////////////////////////////////////////////////////////////
 module.exports = {
   userAuthentication : userAuthentication,
   userRegistration : userRegistration,
-  isUsernameTaken : isUsernameTaken
+  isUsernameTaken : isUsernameTaken,
+  userRole  : userRole
 
 }
