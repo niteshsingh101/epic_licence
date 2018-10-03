@@ -1,5 +1,7 @@
 var express = require('express');
 var expressValidator = require('express-validator'); //Declare Express-Validator
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr('myTotalySecretKey');
 var user =  require('../../model/admin/user');
 
 
@@ -12,7 +14,8 @@ module.exports.home = function(req, res, next) {
   }else {
     user.userRole().then(function(roles){
       res.render('admin/index', { title: 'Login',userRole: roles,  mobileErrorMessage: req.flash('mobileErrorMessage'), emailErrorMessage: req.flash('emailErrorMessage'),
-      passwordErrorMessage: req.flash('passwordErrorMessage'), confirmPasswordErrorMessage: req.flash('confirmPasswordErrorMessage'), userEmailErrorMessage: req.flash('userEmailErrorMessage') });
+      passwordErrorMessage: req.flash('passwordErrorMessage'), confirmPasswordErrorMessage: req.flash('confirmPasswordErrorMessage'), userEmailErrorMessage: req.flash('userEmailErrorMessage'),
+    wrongPasswordMsg: req.flash('wrongPasswordMsg') });
     }).catch((err) => setImmediate(() => { throw err; }));
   }
 };
@@ -75,14 +78,14 @@ module.exports.userLogin = function(req, res, next){
   var username = req.body.username;
   var password = req.body.password;
   user.userAuthentication(username, password).then(function(rows) {
-    console.log("Rows length = ", rows.length);
-    if(rows.length > 0){
+    if(password == cryptr.decrypt(rows[0].password)){
       req.session.userLogin = true ;
       req.session.userName = rows[0].fullname
       console.log(rows);
       res.render('admin/dashboard', { title: 'Dashboard' });
     }
     else{
+      req.flash('wrongPasswordMsg', 'Wrong password !');
       res.redirect('/users');
     }
   }).catch((err) => setImmediate(() => { throw err; }));

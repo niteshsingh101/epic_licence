@@ -6,8 +6,10 @@ const cryptr = new Cryptr('myTotalySecretKey');
 /* Login Model */
 function userAuthentication(username, password)
 {
+  var encryptedPassword = cryptr.encrypt(password);
+  console.log("encryptedPassword", encryptedPassword);
     return new Promise(function(resolve, reject) {
-        db.query("Select * from system_users where email = '"+username+"' AND password = '"+password+"'", function (err, rows, fields) {
+        db.query("Select * from system_users where email = '"+username+"'", function (err, rows, fields) {
             if (err) {
                 return reject(err); // Call reject on error states
             }
