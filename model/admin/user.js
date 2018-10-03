@@ -40,7 +40,6 @@ function isUsernameTaken(username)
         });
     });
 }
-
 /* Fetch userType from user_role table */
 function userRole(){
   return new Promise(function(resolve, reject){

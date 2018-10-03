@@ -1,15 +1,11 @@
 <% include partial/header %>
-
 	<body class="no-skin">
 		<% include partial/nav %>
-
 		<div class="main-container ace-save-state" id="main-container">
 			<script type="text/javascript">
 				try{ace.settings.loadState('main-container')}catch(e){}
 			</script>
-
 			<% include partial/left %>
-
 			<div class="main-content">
 				<div class="main-content-inner">
 					<% include partial/breadcrumb %>
@@ -32,27 +28,22 @@
 										</div>
 										<span>&nbsp; Choose Skin</span>
 									</div>
-
 									<div class="ace-settings-item">
 										<input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-navbar" autocomplete="off" />
 										<label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label>
 									</div>
-
 									<div class="ace-settings-item">
 										<input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-sidebar" autocomplete="off" />
 										<label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
 									</div>
-
 									<div class="ace-settings-item">
 										<input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-breadcrumbs" autocomplete="off" />
 										<label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label>
 									</div>
-
 									<div class="ace-settings-item">
 										<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" autocomplete="off" />
 										<label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label>
 									</div>
-
 									<div class="ace-settings-item">
 										<input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-add-container" autocomplete="off" />
 										<label class="lbl" for="ace-settings-add-container">
@@ -95,9 +86,7 @@
 							<div class="table-header">
 								Results for "Latest Registered Domains"
 							</div>
-
 										<!-- div.table-responsive -->
-
 										<!-- div.dataTables_borderWrap -->
 										<div>
 											<div id="dynamic-table_wrapper" class="dataTables_wrapper form-inline no-footer"><div class="row"><div class="col-xs-6"><div class="dataTables_length" id="dynamic-table_length"><label>Display <select name="dynamic-table_length" aria-controls="dynamic-table" class="form-control input-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> records</label></div></div><div class="col-xs-6"><div id="dynamic-table_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control input-sm" placeholder="" aria-controls="dynamic-table"></label></div></div></div><table id="dynamic-table" class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="dynamic-table_info">
@@ -196,6 +185,4 @@
 					</div><!-- /.page-content -->
 				</div>
 			</div><!-- /.main-content -->
-
-
 <% include partial/footer %>
