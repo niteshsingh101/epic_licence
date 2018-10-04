@@ -4,7 +4,6 @@ const Cryptr = require('cryptr');
 const cryptr = new Cryptr('myTotalySecretKey');
 var user =  require('../../model/admin/user');
 
-
 /* method: home
   @desc: to check the users is login or not if login then redirect to Dashboard otherwise login page
  */
@@ -15,7 +14,7 @@ module.exports.home = function(req, res, next) {
     user.userRole().then(function(roles){
       res.render('admin/index', { title: 'Login',userRole: roles,  mobileErrorMessage: req.flash('mobileErrorMessage'), emailErrorMessage: req.flash('emailErrorMessage'),
       passwordErrorMessage: req.flash('passwordErrorMessage'), confirmPasswordErrorMessage: req.flash('confirmPasswordErrorMessage'), userEmailErrorMessage: req.flash('userEmailErrorMessage'),
-    wrongPasswordMsg: req.flash('wrongPasswordMsg') });
+    wrongPasswordMsg: req.flash('wrongPasswordMsg'), errorMessage: req.flash('errorMessage') });
     }).catch((err) => setImmediate(() => { throw err; }));
   }
 };
@@ -53,6 +52,10 @@ module.exports.userRegistration = function(req, res, next){
     req.flash('confirmPasswordErrorMessage', 'Password is not matching with confirm password !');
     res.redirect('/users');
   }
+  else if (req.body.userType == "") {
+    req.flash('errorMessage', 'Select user type !');
+    res.redirect('/users');
+  }
   else {
     user.isUsernameTaken(req.body.email).then(function(rows){
       if(rows.length > 0){
@@ -60,7 +63,7 @@ module.exports.userRegistration = function(req, res, next){
         res.redirect('/users');
       }
       else {
-        user.userRegistration(req.body.email, req.body.mobile, req.body.cnf_password).then(function(result){
+        user.userRegistration(req.body.email, req.body.mobile, req.body.cnf_password, req.body.userType).then(function(result){
           if(result){
             req.session.userLogin = true ;
             console.log(result);
@@ -80,7 +83,7 @@ module.exports.userLogin = function(req, res, next){
   user.userAuthentication(username, password).then(function(rows) {
     if(password == cryptr.decrypt(rows[0].password)){
       req.session.userLogin = true ;
-      req.session.userName = rows[0].fullname
+      //req.session.userName = rows[0].fullname
       console.log(rows);
       res.render('admin/dashboard', { title: 'Dashboard' });
     }
@@ -88,7 +91,11 @@ module.exports.userLogin = function(req, res, next){
       req.flash('wrongPasswordMsg', 'Wrong password !');
       res.redirect('/users');
     }
-  }).catch((err) => setImmediate(() => { throw err; }));
+  }).catch((err) => setImmediate(() => {
+     //throw err;
+     req.flash('wrongPasswordMsg', 'Wrong user Email !');
+     res.redirect('/users');
+   }));
 };
 
 /* method: userlogout, @desc:  */
