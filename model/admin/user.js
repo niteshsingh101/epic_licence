@@ -6,22 +6,21 @@ const cryptr = new Cryptr('myTotalySecretKey');
 /* Login Model */
 function userAuthentication(username, password)
 {
-  var encryptedPassword = cryptr.encrypt(password);
-  console.log("encryptedPassword", encryptedPassword);
-    return new Promise(function(resolve, reject) {
-        db.query("Select * from system_users where email = '"+username+"'", function (err, rows, fields) {
-            if (err) {
-                return reject(err); // Call reject on error states
-            }
-            resolve(rows); // call resolve with results
-        });
+  return new Promise(function(resolve, reject) {
+    db.query("Select * from system_users where email = '"+username+"'", function (err, rows, fields) {
+        if (err) {
+            return reject(err); // Call reject on error states
+        }
+        //console.log("Rows length: ", rows.length);
+        resolve(rows); // call resolve with results
     });
+  });
 }
 /* User Registration */
-function userRegistration(email, mobile, password){
-  var encryptedString = cryptr.encrypt(password);
+function userRegistration(email, mobile, password, userType){
+  var encryptedPassword = cryptr.encrypt(password);
     return new Promise(function(resolve, reject){
-    db.query("insert into system_users (email, password, verification_status, status) VALUES ('"+email+"','"+ encryptedString+"', '0', '0')", function(err, result){
+    db.query("insert into system_users (email, password, user_type, verification_status, status) VALUES ('"+email+"','"+ encryptedPassword+"','"+ userType+"', '0', '0')", function(err, result){
       if (err) {
         return reject(err);
       }

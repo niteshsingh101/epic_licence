@@ -1,6 +1,6 @@
-<select class="form-control">
+<select class="form-control" name="userType">
   <option value="">Select user type</option>
   <% userRole.forEach(function(userType){ %>
-      <option value=""><%=userType.role_name %></option>
+      <option value="<%=userType.id %>"><%=userType.role_name %></option>
   <% }) %>
 </select>
