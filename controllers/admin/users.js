@@ -80,7 +80,7 @@ module.exports.userRegistration = function(req, res, next){
 module.exports.userLogin = function(req, res, next){
   var username = req.body.username;
   var password = req.body.password;
-  user.userAuthentication(username, password).then(function(rows) {
+  user.userAuthentication(username).then(function(rows) {
     if(password == cryptr.decrypt(rows[0].password)){
       req.session.userLogin = true ;
       //req.session.userName = rows[0].fullname

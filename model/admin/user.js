@@ -4,7 +4,7 @@ var Promise = require('promise');
 const Cryptr = require('cryptr');
 const cryptr = new Cryptr('myTotalySecretKey');
 /* Login Model */
-function userAuthentication(username, password)
+function userAuthentication(username)
 {
   return new Promise(function(resolve, reject) {
     db.query("Select * from system_users where email = '"+username+"'", function (err, rows, fields) {
